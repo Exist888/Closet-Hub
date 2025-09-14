@@ -1,4 +1,4 @@
-import './Shop.scss';
+import "./Shop.scss";
 
 export function Shop() {
     return (
