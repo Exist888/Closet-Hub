@@ -1,0 +1,13 @@
+.sign-in-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    padding: 1rem 0;
+
+    .sign-in-form-section,
+    .sign-up-form-section {
+        width: 500px;
+        max-width: 100%;
+    }
+}

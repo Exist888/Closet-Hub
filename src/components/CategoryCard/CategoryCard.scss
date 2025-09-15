@@ -39,6 +39,15 @@
             transform: scale(1.1);
             transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
         }
+
+        & .category-title-and-cta-box {
+            background-color: #fff;
+            cursor: pointer;
+
+            & p {
+                color: #0066ff;
+            }
+        }
     }
 
     .category-title-and-cta-box {
@@ -54,15 +63,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-        &:hover {
-            background-color: #fff;
-            cursor: pointer;
-
-            & p {
-                color: #0066ff;
-            }
-        }
 
         @media (min-width: 900px) {
             justify-content: start;
