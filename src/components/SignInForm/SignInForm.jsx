@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { signInWithGooglePopup, 
-    createUserDocumentFromAuth } 
-from "../../services/firebase/firebase.js";
+import { 
+    signInUserWithEmailAndPassword,
+    createUserDocumentFromAuth,
+    signInWithGooglePopup,
+} from "../../services/firebase/firebase.js";
 import { FormInput } from "../FormInput/FormInput.jsx";
 import { Button } from "../Button/Button.jsx";
 import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
@@ -23,6 +25,31 @@ export function SignInForm() {
         setFormFields({ ...formFields, [name]: value });
     }
 
+    function resetFormFields() {
+        setFormFields(defaultFormFields);
+    }
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        try {
+            const response = await signInUserWithEmailAndPassword(email, password);
+            const user = response.user;
+
+            // ATTN: Remove before deployment
+            console.log(user);
+            resetFormFields();
+        } catch(error) {
+            if (error.code === "auth/invalid-credential") {
+                alert("Invalid credentials. Please double check your inputs, or create an account first.")
+            }
+            // ATTN: Remove specific error message before deployment
+            console.log("Error: ", error);
+            console.log("Error Code: ", error.code);
+            console.log("Error Message: ", error.message);
+        }
+    }
+
     async function logGoogleUser() {
         const response = await signInWithGooglePopup();
         const userDocRef = await createUserDocumentFromAuth(response.user);
@@ -33,9 +60,9 @@ export function SignInForm() {
             <h1>Already have an account?</h1>
             <p> 
                 <i aria-hidden="true" className="fa-solid fa-lock"></i>
-                <div><span>Sign in</span> with your email and password</div>
+                <span><span className="bold">Sign in</span> with your email and password</span>
             </p>
-            <form onSubmit={() => {}}>
+            <form onSubmit={handleSubmit}>
                 <FormInput
                     label="Email"
                     id="sign-in-email" 

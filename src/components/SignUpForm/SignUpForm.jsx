@@ -3,8 +3,8 @@ import { FormInput } from "../FormInput/FormInput.jsx";
 import { 
     createAuthUserWithEmailAndPassword, 
     createUserDocumentFromAuth,
-    signInWithGooglePopup } 
-from "../../services/firebase/firebase.js";
+    signInWithGooglePopup 
+} from "../../services/firebase/firebase.js";
 import { Button } from "../Button/Button.jsx";
 import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
 import "./SignUpForm.scss";
@@ -49,6 +49,7 @@ export function SignUpForm() {
             if (error.code === "auth/email-already-in-use") {
                 alert("Cannot create account. Email already in use.")
             }
+            // ATTN: Remove specific error message before deployment
             console.log("Error creating account: ", error.message);
         }
     }
@@ -63,7 +64,7 @@ export function SignUpForm() {
             <h1>New to Closet Hub?</h1>
             <p>
                 <i aria-hidden="true" className="fa-solid fa-user-plus"></i>
-                <div><span>Sign up</span> with your name, email, and password</div>
+                <span><span className="bold">Sign up</span> with your name, email, and password</span>
             </p>
             <form onSubmit={handleSubmit}>
                 <FormInput

@@ -12,7 +12,7 @@ export function Header() {
                 <ul className="menu">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/shop">Shop</Link></li>
-                    <li><Link to="/sign-in">Sign In</Link></li>
+                    <li><Link to="/auth">Sign In</Link></li>
                 </ul>
             </nav>
         </header>

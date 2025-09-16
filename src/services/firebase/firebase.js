@@ -3,7 +3,8 @@ import {
     getAuth,
     signInWithPopup,
     GoogleAuthProvider,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -65,6 +66,7 @@ export async function createUserDocumentFromAuth(userAuth, additionalInfo = {}) 
                 ...additionalInfo
             });
         } catch (error) {
+            // ATTN: Remove specific error message before deployment
             console.log("Error creating the user: ", error.message);
         }
     }
@@ -76,4 +78,9 @@ export async function createUserDocumentFromAuth(userAuth, additionalInfo = {}) 
 export async function createAuthUserWithEmailAndPassword(email, password) {
     if (!email || !password) return;
     return await createUserWithEmailAndPassword(auth, email, password);
+}
+
+export async function signInUserWithEmailAndPassword(email, password) {
+    if (!email || !password) return;
+    return await signInWithEmailAndPassword(auth, email, password);
 }
