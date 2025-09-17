@@ -26,6 +26,8 @@ button {
     font-family: inherit;
 }
 
-button:hover {
+button:hover,
+a:hover,
+.link:hover {
     cursor: pointer;
 }

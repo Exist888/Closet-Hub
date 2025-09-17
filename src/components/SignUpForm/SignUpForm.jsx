@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FormInput } from "../FormInput/FormInput.jsx";
+import { Button } from "../Button/Button.jsx";
+import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
+import { UserContext } from "../../contexts/UserContext.jsx";
 import { 
     createAuthUserWithEmailAndPassword, 
     createUserDocumentFromAuth,
     signInWithGooglePopup 
 } from "../../services/firebase/firebase.js";
-import { Button } from "../Button/Button.jsx";
-import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
 import "./SignUpForm.scss";
 
 const defaultFormFields = {
@@ -19,6 +20,7 @@ const defaultFormFields = {
 export function SignUpForm() {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
+    const { setCurrentUser } = useContext(UserContext); // Destructure setter function from UserContext obj
 
     function handleChange(event) {
         // Destructure input name and value when input changes
@@ -42,7 +44,9 @@ export function SignUpForm() {
         try {
             const response = await createAuthUserWithEmailAndPassword(email, password);
             const user = response.user;
-
+            console.log(user); // ATTN: Remove before deployment
+            // Pass user result into setter function from UserContext
+            setCurrentUser(user);
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
         } catch (error) {
@@ -54,9 +58,12 @@ export function SignUpForm() {
         }
     }
 
-    async function logGoogleUser() {
+    async function signInWithGoogle() {
         const response = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(response.user);
+        const user = response.user;
+        await createUserDocumentFromAuth(user);
+        // Pass user result into setter function from UserContext
+        setCurrentUser(user);
     }
 
     return (
@@ -119,7 +126,7 @@ export function SignUpForm() {
                 <Button buttonClass="signUp" type="submit">Sign Up</Button>
             </form>
             <ButtonSeparator />
-            <Button buttonClass="googleContinue" onClick={logGoogleUser}>
+            <Button buttonClass="googleContinue" onClick={signInWithGoogle}>
                 <i className="fa-brands fa-google"></i>
                 Continue With Google
             </Button>

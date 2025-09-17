@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { FormInput } from "../FormInput/FormInput.jsx";
+import { Button } from "../Button/Button.jsx";
+import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
+import { UserContext } from "../../contexts/UserContext.jsx";
 import { 
     signInUserWithEmailAndPassword,
     createUserDocumentFromAuth,
     signInWithGooglePopup,
 } from "../../services/firebase/firebase.js";
-import { FormInput } from "../FormInput/FormInput.jsx";
-import { Button } from "../Button/Button.jsx";
-import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
 import "./SignInForm.scss";
 
 const defaultFormFields = {
@@ -17,6 +18,7 @@ const defaultFormFields = {
 export function SignInForm() {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+    const { setCurrentUser } = useContext(UserContext); // Destructure setter function from UserContext obj
 
     function handleChange(event) {
         // Destructure input name and value when input changes
@@ -35,13 +37,13 @@ export function SignInForm() {
         try {
             const response = await signInUserWithEmailAndPassword(email, password);
             const user = response.user;
-
-            // ATTN: Remove before deployment
-            console.log(user);
+            console.log(user); // ATTN: Remove before deployment
+            // Pass user result into setter function from UserContext
+            setCurrentUser(user);
             resetFormFields();
         } catch(error) {
             if (error.code === "auth/invalid-credential") {
-                alert("Invalid credentials. Please double check your inputs, or create an account first.")
+                alert("Invalid credentials. Please double check your inputs, or create an account.")
             }
             // ATTN: Remove specific error message before deployment
             console.log("Error: ", error);
@@ -50,9 +52,12 @@ export function SignInForm() {
         }
     }
 
-    async function logGoogleUser() {
+    async function signInWithGoogle() {
         const response = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(response.user);
+        const user = response.user;
+        await createUserDocumentFromAuth(user);
+        // Pass user result into setter function from UserContext
+        setCurrentUser(user);
     }
 
     return (
@@ -89,7 +94,7 @@ export function SignInForm() {
                 <Button buttonClass="signIn" type="submit">Sign In</Button>
             </form>
             <ButtonSeparator />
-            <Button buttonClass="googleSignIn" onClick={logGoogleUser}>
+            <Button buttonClass="googleSignIn" onClick={signInWithGoogle}>
                 <i className="fa-brands fa-google"></i>
                 Sign In With Google
             </Button>
