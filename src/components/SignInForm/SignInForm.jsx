@@ -1,13 +1,8 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { FormInput } from "../FormInput/FormInput.jsx";
 import { Button } from "../Button/Button.jsx";
 import { ButtonSeparator } from "../ButtonSeparator/ButtonSeparator.jsx";
-import { UserContext } from "../../contexts/UserContext.jsx";
-import { 
-    signInUserWithEmailAndPassword,
-    createUserDocumentFromAuth,
-    signInWithGooglePopup,
-} from "../../services/firebase/firebase.js";
+import { signInUserWithEmailAndPassword, signInWithGooglePopup } from "../../services/firebase/firebase.js";
 import "./SignInForm.scss";
 
 const defaultFormFields = {
@@ -18,7 +13,6 @@ const defaultFormFields = {
 export function SignInForm() {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
-    const { setCurrentUser } = useContext(UserContext); // Destructure setter function from UserContext obj
 
     function handleChange(event) {
         // Destructure input name and value when input changes
@@ -38,8 +32,6 @@ export function SignInForm() {
             const response = await signInUserWithEmailAndPassword(email, password);
             const user = response.user;
             console.log(user); // ATTN: Remove before deployment
-            // Pass user result into setter function from UserContext
-            setCurrentUser(user);
             resetFormFields();
         } catch(error) {
             if (error.code === "auth/invalid-credential") {
@@ -53,11 +45,7 @@ export function SignInForm() {
     }
 
     async function signInWithGoogle() {
-        const response = await signInWithGooglePopup();
-        const user = response.user;
-        await createUserDocumentFromAuth(user);
-        // Pass user result into setter function from UserContext
-        setCurrentUser(user);
+        await signInWithGooglePopup();
     }
 
     return (

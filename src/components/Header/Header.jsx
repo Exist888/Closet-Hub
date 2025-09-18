@@ -7,12 +7,11 @@ import "./Header.scss";
 
 export function Header() {
     // Destructure currentUser state from user context
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
     console.log("Current User: ", currentUser);
 
     async function signOutHandler() {
         await signOutUser();
-        setCurrentUser(null);
     }
 
     return (
