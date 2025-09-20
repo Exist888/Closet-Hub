@@ -1,9 +1,11 @@
+import { Fragment } from "react";
+import { AllProducts } from "../../components/ProductsSection/ProductsSection.jsx";
 import "./Shop.scss";
 
 export function Shop() {
     return (
-        <section className="shop-section elements-container">
-            <p>This is the shop page</p>
-        </section>
+        <Fragment>
+            <AllProducts />
+        </Fragment>
     );
 }

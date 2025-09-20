@@ -10,7 +10,7 @@ export const UserContext = createContext({
 
 export function UserProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
-    // Include destructured user and setter function after capturing user object
+    // Wrap user and setter function in object to pass into Provider
     const value = { currentUser, setCurrentUser };
 
     useEffect(() => {

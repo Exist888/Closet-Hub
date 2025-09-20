@@ -26,6 +26,31 @@
     }
 }
 
+.product {
+    background-color: #dbe8ff;
+    color: #001e52;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        display: flex;
+        gap: 0.25rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fa-solid {
+        font-size: 1.625rem;
+    }
+
+    &:hover {
+        background-color: #f2f7ff;
+        color: #0041ba;
+    }
+}
+
 .google-sign-in,
 .google-continue {
     display: flex;
