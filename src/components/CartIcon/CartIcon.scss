@@ -33,4 +33,9 @@
     &.on {
         color: #eb5e00;
     }
+
+    &:active {
+        transform: scale(0.97);
+        transition: transform 0.2s ease-in-out;
+    }
 }

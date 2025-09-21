@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useContext, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { signOutUser } from "../../services/firebase/firebase.js";
 import { CartIcon } from "../../components/CartIcon/CartIcon.jsx";
@@ -11,6 +11,9 @@ export function Header() {
     const [isDropdownClicked, setIsDropdownClicked] = useState(false);
     // Set up ref for CartIcon where it will be assigned using forwardRef so it can be sent to a sibling
     const cartIconRef = useRef(null);
+    // Destructure currentUser state from user context
+    const { currentUser } = useContext(UserContext);
+    console.log("Current User: ", currentUser);
 
     function toggleDropdown() {
         setIsDropdownClicked(!isDropdownClicked);
@@ -19,9 +22,6 @@ export function Header() {
     function closeDropdown() {
         setIsDropdownClicked(false);
     }
-    // Destructure currentUser state from user context
-    const { currentUser } = useContext(UserContext);
-    console.log("Current User: ", currentUser);
 
     async function signOutHandler() {
         await signOutUser();

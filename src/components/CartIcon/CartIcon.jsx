@@ -1,9 +1,14 @@
 // Use forward Ref because we will pass this ref into a sibling component via the Header parent
-import { forwardRef } from "react";
+import { useContext, forwardRef } from "react";
+import { CartContext } from "../../contexts/CartContext.jsx";
 import ShoppingBag from "../../assets/shopping-bag.svg?react";
 import "./CartIcon.scss";
 
 export function CartIconInner({ toggleDropdown, isDropdownClicked }, ref) {
+    const { cartCount } = useContext(CartContext);
+    
+    console.log("Cart Items: ", cartCount);
+
     return (
         <button 
             ref={ref}
@@ -12,7 +17,7 @@ export function CartIconInner({ toggleDropdown, isDropdownClicked }, ref) {
             aria-label="Toggle shopping cart"
             >
             <ShoppingBag className="shopping-bag-icon" aria-hidden="true" />
-            <span className="item-count">0</span>
+            <span className="item-count">{cartCount}</span>
         </button>
     );
 }

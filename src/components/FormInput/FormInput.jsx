@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import "./FormInput.scss";
 
 export function FormInput({ label, id, type, onChange, name, value, minLength, maxLength, autoComplete }) {

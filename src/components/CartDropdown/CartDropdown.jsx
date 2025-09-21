@@ -1,20 +1,26 @@
-import { useEffect, useRef } from "react";
+import { useRef, useEffect, useContext } from "react";
+import { CartContext } from "../../contexts/CartContext.jsx";
+import { CartItem } from "../CartItem/CartItem.jsx";
 import { Button } from "../Button/Button.jsx";
 import "./CartDropdown.scss";
 
 export function CartDropdown({ closeDropdown, isDropdownClicked, cartIconRef }) {
     const dropdownRef = useRef(null);
+    const { cartItems } = useContext(CartContext);
 
     useEffect(() => {
         function handleOutsideClick(event) {
-            const clickedOutsideDropdown = (
-                dropdownRef.current && !dropdownRef.current.contains(event.target)
+            const clickedDropdown = (
+                dropdownRef.current && dropdownRef.current.contains(event.target)
             );
-            const clickedOutsideCartIcon = (
-                cartIconRef.current && !cartIconRef.current.contains(event.target)
+            const clickedCartIcon = (
+                cartIconRef.current && cartIconRef.current.contains(event.target)
+            );
+            const clickedProductBtn = (
+                event.target.closest(".product")
             );
 
-            if (clickedOutsideDropdown && clickedOutsideCartIcon) {
+            if (!clickedDropdown && !clickedCartIcon && !clickedProductBtn) {
                 closeDropdown();
             }
         }
@@ -29,12 +35,37 @@ export function CartDropdown({ closeDropdown, isDropdownClicked, cartIconRef }) 
 
     }, [isDropdownClicked, closeDropdown]);
 
+    const cartItemsJsx = cartItems.map((cartItem) => {
+        return (
+            <CartItem 
+                key={cartItem.id} 
+                cartItem={cartItem}
+                >
+            </CartItem>
+        )
+    });
+
+    const emptyCartMessage = (
+        <div className="empty-cart-msg-container">
+            <div>
+                <span className="empty-cart-msg">Your cart is empty:</span>
+                <span className="empty-cart-cta">Let's go shopping</span>
+            </div>
+            <i className="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+        </div>
+    );
+
     return (
         <section className="cart-dropdown-container" ref={dropdownRef}>
-            <button className="close-btn" onClick={closeDropdown}>
-                <i className="fa-solid fa-xmark"></i>
-            </button>
-            <article className="cart-items"></article>
+            <div className="cart-dropdown-top-container">
+                <span className="title">Your Cart</span>
+                <button className="close-btn" onClick={closeDropdown}>
+                    <i className="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <article className="cart-items">
+                {cartItems.length > 0 ? cartItemsJsx : emptyCartMessage}
+            </article>
             <Button>
                 Go to Checkout
                 <i className="fa-solid fa-arrow-right"></i>

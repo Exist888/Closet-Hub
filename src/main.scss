@@ -24,6 +24,11 @@ a {
 
 button {
     font-family: inherit;
+
+    &:active {
+        transform: scale(0.97);
+        transition: transform 0.2s ease-in-out;
+    }
 }
 
 button:hover,
