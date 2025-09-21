@@ -10,6 +10,7 @@ header {
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
+        position: relative;
     }
 
     .logo img {
@@ -20,6 +21,13 @@ header {
             transform: scale(1.05);
             transition: transform 0.2s ease-in-out;
         }
+    }
+
+    .menu-container {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+        flex-wrap: wrap;
     }
 
     .menu {
