@@ -5,7 +5,8 @@ const BUTTON_CLASSES = {
     signUp: "sign-up",
     googleSignIn: "google-sign-in",
     googleContinue: "google-continue",
-    product: "product"
+    product: "product",
+    checkout: "checkout"
 }
 
 export function Button({ children, buttonClass = "signIn", ...otherProps}) {

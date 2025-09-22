@@ -1,16 +1,16 @@
-.button-container {
+.button-container, .checkout {
     font-size: 1rem;
     font-weight: 700;
     padding: 0.75rem 1rem;
     border-radius: 0.25rem;
 }
 
-.sign-in, .sign-up {
+.sign-in, .sign-up, .checkout {
     color: #fff;
     border: none;
 }
 
-.sign-in {
+.sign-in, .checkout {
     background-color: #0056d6;
 
     &:hover {
@@ -24,6 +24,13 @@
     &:hover {
         background-color: #8a7300;
     }
+}
+
+.checkout {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .product {

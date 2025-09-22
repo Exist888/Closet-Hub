@@ -1,4 +1,5 @@
 import { useRef, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../contexts/CartContext.jsx";
 import { CartItem } from "../CartItem/CartItem.jsx";
 import { Button } from "../Button/Button.jsx";
@@ -7,6 +8,7 @@ import "./CartDropdown.scss";
 export function CartDropdown({ closeDropdown, isDropdownClicked, cartIconRef }) {
     const dropdownRef = useRef(null);
     const { cartItems } = useContext(CartContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         function handleOutsideClick(event) {
@@ -19,8 +21,11 @@ export function CartDropdown({ closeDropdown, isDropdownClicked, cartIconRef }) 
             const clickedProductBtn = (
                 event.target.closest(".product")
             );
+            const clickedCheckoutBtn = (
+                event.target.closest(".checkout")
+            );
 
-            if (!clickedDropdown && !clickedCartIcon && !clickedProductBtn) {
+            if (!clickedDropdown && !clickedCartIcon && !clickedProductBtn || clickedCheckoutBtn) {
                 closeDropdown();
             }
         }
@@ -66,7 +71,7 @@ export function CartDropdown({ closeDropdown, isDropdownClicked, cartIconRef }) 
             <article className="cart-items">
                 {cartItems.length > 0 ? cartItemsJsx : emptyCartMessage}
             </article>
-            <Button>
+            <Button className="checkout" onClick={() => navigate("/checkout")}>
                 Go to Checkout
                 <i className="fa-solid fa-arrow-right"></i>
             </Button>
