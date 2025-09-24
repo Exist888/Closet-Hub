@@ -18,7 +18,10 @@ export function CategoryPage() {
         setProducts(categoriesMap[category]);
     }, [category, categoriesMap]);
 
-    const categoryProductsJsx = products.map((product) => {
+    // If products do not exist yet, map over an empty array to avoid errors
+    const productsArray = products || [];
+
+    const categoryProductsJsx = productsArray.map((product) => {
         return (
             <ProductCard key={product.id} product={product}/>
         );
@@ -30,7 +33,7 @@ export function CategoryPage() {
                 <h1>All {category}</h1>
             </div>
             <div className="category-container">
-                {categoryProductsJsx}
+                {categoryProductsJsx && categoryProductsJsx}
             </div>
         </section>
     );

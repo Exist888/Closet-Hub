@@ -3,7 +3,7 @@ import { getCategoriesAndDocuments } from "../services/firebase/firebase.js";
 
 // Create context for products so we can easily pass products into any part of the app
 export const CategoriesContext = createContext({
-    shopCategoriesMap: {}
+    categoriesMap: {}
 });
 
 export function CategoriesProvider({ children }) {
