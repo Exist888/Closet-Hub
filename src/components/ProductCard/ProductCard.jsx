@@ -14,16 +14,16 @@ export function ProductCard({ product }) {
     return (
         <article className="product-card">
             <img src={imageUrl} alt={`photo of ${name}`}/>
-            <div className="product-card-text">
-                <span className="name">{name}</span>
-                <span className="price">{price} USD</span>
-            </div>
             <Button buttonClass="product" onClick={addProductToCart}>
                 <div>
                     <i className="fa-solid fa-cart-plus"></i>
                     <span>Add to cart</span>
                 </div>
             </Button>
+            <div className="product-card-text">
+                <span className="name">{name}</span>
+                <span className="price">{price} USD</span>
+            </div>
         </article>
     );
 }

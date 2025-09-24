@@ -1,7 +1,8 @@
-import { CategoryCard } from "../CategoryCard/CategoryCard.jsx";
-import "./CategoriesSection.scss";
+import { CategoryCard } from "../../components/CategoryCard/CategoryCard.jsx";
+import { categories } from "../../data/categories.js";
+import "./HomePage.scss";
 
-export function CategoriesSection({ categories }) {
+export function HomePage() {
     const categoriesJsx = categories.map((category) => {
         return (
             <CategoryCard key={category.id} category={category} />

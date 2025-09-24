@@ -1,9 +1,8 @@
-import { CategoriesSection } from "../../components/CategoriesSection/CategoriesSection.jsx";
-import { categories } from "../../data/categories.js";
+import { HomePage } from "../../pages/HomePage/HomePage.jsx";
 import "./Home.scss";
 
 export function Home() {
     return (
-        <CategoriesSection categories={categories} />
+        <HomePage />
     );
 }

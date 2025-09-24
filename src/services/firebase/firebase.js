@@ -8,7 +8,16 @@ import {
     signOut,
     onAuthStateChanged
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { 
+    getFirestore, 
+    doc, 
+    getDoc, 
+    setDoc, 
+    collection, 
+    writeBatch, 
+    query,
+    getDocs
+} from "firebase/firestore";
 
 // Initialize Firebase app with .env variables
 const firebaseConfig = {
@@ -39,6 +48,46 @@ export function signInWithGooglePopup() {
 
 // Initialize Firestore database
 export const db = getFirestore();
+
+// Add multiple docs to a collection in Firestore (creates the collection if it doesn’t exist)
+export async function addCollectionAndDocuments(collectionKey, objectsToAdd) {
+    // Create a reference to our collection using db as location and collectionKey as its name
+    const collectionRef = collection(db, collectionKey);
+    // Create a batch so we can achieve multiple writes in one unit
+    const batch = writeBatch(db);
+    // Iterate through all data objects  
+    objectsToAdd.forEach((object) => {
+        // Create a reference to our doc using collectionRef as location and object.title as its doc id
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        // Set each doc reference and object into our batch before committing the batch as a whole
+        batch.set(docRef, object);
+    });
+    // Execute all the batched operations
+    await batch.commit();
+    console.log("Done committing batch");
+}
+
+export async function getCategoriesAndDocuments() {
+    // Get a reference to our "categories" collection in Firestore
+    const collectionRef = collection(db, "categories");
+    // Build an unfiltered query to our collectionRef
+    const q = query(collectionRef);
+    // Fetch all documents from the collection
+    const querySnapshot = await getDocs(q);
+    // Get the array of document snapshots
+    const docSnapshots = querySnapshot.docs;
+    // Convert the docs array into one object where key = category title & value = items
+    const categoriesMap = docSnapshots.reduce((acc, docSnapshot) => {
+        // Destructure title and items from the document data
+        const { title, items } = docSnapshot.data();
+        // Insert lowercase title as key in accumulator object and assign items array as value
+        acc[title.toLowerCase()] = items;
+        // Return the updated accumulator object
+        return acc;
+    }, {});
+    // Return the final object
+    return categoriesMap;
+}
 
 // Create a user document in Firestore from authenticated user data
 // Include additionalInfo as optional param to overwrite nullified displayName (for em and pw auth)

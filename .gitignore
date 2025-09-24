@@ -15,6 +15,9 @@ dist-ssr
 # Dotenv file
 .env
 
+# Archive folder including one-time scripts
+/archive/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

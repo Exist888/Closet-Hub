@@ -1,11 +1,13 @@
-import { Fragment } from "react";
-import { AllProducts } from "../../components/ProductsSection/ProductsSection.jsx";
+import { Routes, Route } from "react-router-dom";
+import { ShopPage } from "../../pages/ShopPage/ShopPage.jsx";
+import { CategoryPage } from "../../pages/CategoryPage/CategoryPage.jsx";
 import "./Shop.scss";
 
 export function Shop() {
     return (
-        <Fragment>
-            <AllProducts />
-        </Fragment>
+        <Routes>
+            <Route index element={<ShopPage />} />
+            <Route path=":category" element={<CategoryPage />} />
+        </Routes>
     );
 }

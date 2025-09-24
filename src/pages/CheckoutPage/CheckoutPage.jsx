@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext.jsx";
-import { Button } from "../Button/Button.jsx";
-import "./CheckoutSection.scss";
+import { Button } from "../../components/Button/Button.jsx";
+import "./CheckoutPage.scss";
 
-export function CheckoutSection() {
+export function CheckoutPage() {
     const { 
         cartItems, 
         cartCount,
@@ -84,14 +84,18 @@ export function CheckoutSection() {
                 </span>
             </div>
             <table>
-                <tr className="table-header-row">
-                    <th>Product Photo</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th>Remove</th>
-                </tr>
-                {cartItemTableRowsJsx}
+                <thead>
+                    <tr className="table-header-row">
+                        <th>Product Photo</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {cartItemTableRowsJsx}
+                </tbody>
             </table>
         </section>
     );
