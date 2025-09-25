@@ -12,13 +12,11 @@ export function CategoriesProvider({ children }) {
     useEffect(() => {
         async function getCategoriesMap() {
             const categories = await getCategoriesAndDocuments();
-            console.log(categories);
             setCategoriesMap(categories);
         }
         getCategoriesMap();
     }, []);
 
-    console.log("Shop Categories & Products: ", categoriesMap);
     // Wrap products array in object to pass into Provider
     const value = { categoriesMap };
     

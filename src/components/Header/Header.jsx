@@ -13,7 +13,6 @@ export function Header() {
     const cartIconRef = useRef(null);
     // Destructure currentUser state from user context
     const { currentUser } = useContext(UserContext);
-    console.log("Current User: ", currentUser);
 
     function toggleDropdown() {
         setIsDropdownClicked(!isDropdownClicked);

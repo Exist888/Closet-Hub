@@ -47,7 +47,7 @@ export function CartDropdown({ closeDropdown, isDropdownClicked, cartIconRef }) 
                 cartItem={cartItem}
                 >
             </CartItem>
-        )
+        );
     });
 
     const emptyCartMessage = (

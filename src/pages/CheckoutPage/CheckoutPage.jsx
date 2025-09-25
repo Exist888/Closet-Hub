@@ -13,8 +13,6 @@ export function CheckoutPage() {
         decrementItemCount 
     } = useContext(CartContext);
 
-    console.log("CART ITEMS IN CHECKOUT PG: ", cartItems);
-
     const cartItemTableRowsJsx = cartItems.map((cartItem) => {
         const { id, name, imageUrl, price, quantity } = cartItem;
 

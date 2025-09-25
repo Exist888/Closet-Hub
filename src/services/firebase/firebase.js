@@ -64,7 +64,6 @@ export async function addCollectionAndDocuments(collectionKey, objectsToAdd) {
     });
     // Execute all the batched operations
     await batch.commit();
-    console.log("Done committing batch");
 }
 
 export async function getCategoriesAndDocuments() {
@@ -96,12 +95,9 @@ export async function createUserDocumentFromAuth(userAuth, additionalInfo = {}) 
 
     // Create reference to user object in "users" collection with uid as id
     const userDocRef = doc(db, "users", userAuth.uid);
-    console.log(userDocRef);
 
     // Retrieve the document snapshot - not the document itself
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot);
-    console.log(userSnapshot.exists());
 
     // Create a user document if it doesn't already exist
     if (!userSnapshot.exists()) {
@@ -117,8 +113,7 @@ export async function createUserDocumentFromAuth(userAuth, additionalInfo = {}) 
                 ...additionalInfo
             });
         } catch (error) {
-            // ATTN: Remove specific error message before deployment
-            console.log("Error creating the user: ", error.message);
+            console.error("Error creating the user.");
         }
     }
 

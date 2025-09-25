@@ -6,8 +6,6 @@ import "./CartIcon.scss";
 
 export function CartIconInner({ toggleDropdown, isDropdownClicked }, ref) {
     const { cartCount } = useContext(CartContext);
-    
-    console.log("Cart Items: ", cartCount);
 
     return (
         <button 

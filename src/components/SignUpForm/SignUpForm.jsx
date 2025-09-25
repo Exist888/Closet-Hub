@@ -40,17 +40,15 @@ export function SignUpForm() {
         }
 
         try {
-            const response = await createAuthUserWithEmailAndPassword(email, password);
-            const user = response.user;
-            console.log(user); // ATTN: Remove before deployment
+            await createAuthUserWithEmailAndPassword(email, password);
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
                 alert("Cannot create account. Email already in use.")
+            } else {
+                alert("Error creating account. Please try again or continue with Google instead.")
             }
-            // ATTN: Remove specific error message before deployment
-            console.log("Error creating account: ", error.message);
         }
     }
 

@@ -29,18 +29,14 @@ export function SignInForm() {
         event.preventDefault();
 
         try {
-            const response = await signInUserWithEmailAndPassword(email, password);
-            const user = response.user;
-            console.log(user); // ATTN: Remove before deployment
+            await signInUserWithEmailAndPassword(email, password);
             resetFormFields();
         } catch(error) {
             if (error.code === "auth/invalid-credential") {
                 alert("Invalid credentials. Please double check your inputs, or create an account.")
+            } else {
+                alert("Credentials not found. Please try again.");
             }
-            // ATTN: Remove specific error message before deployment
-            console.log("Error: ", error);
-            console.log("Error Code: ", error.code);
-            console.log("Error Message: ", error.message);
         }
     }
 
